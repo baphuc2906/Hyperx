@@ -35,28 +35,12 @@
     background-color: #19191e;
 }
 
-i.fa.fa-search {
-    color: orange;
-}
-
 .box-0 {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 15px 15px 0 0px;
     padding: 15px;
     margin-bottom: 0px;
     margin-top: 15px;
-}
-
-.container-fluid {
-    width: 100%;
-    padding-right: 0px;
-    padding-left: 0px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.Hotline a {
-    color: #fffff1;
 }
 
 a {
@@ -159,14 +143,7 @@ li.circle {
 
 .product-block {
     margin: 10px 0px;
-}
-
-.Name {
-    text-align: center;
-    color: black;
-    font-size: 15px;
-    text-transform: uppercase;
-    padding: 5px 0px;
+    padding: 50px 100px;
 }
 
 .product {
@@ -207,6 +184,20 @@ li.circle {
 
 .product:hover .layer1 {
     transform: scale(1.1);
+}
+
+.best-seller {
+    display: inline-flex;
+    position: absolute;
+    background-color: #37322e;
+    color: white;
+    height: 30px;
+    width: 90px;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    top: 10%;
+    left: 10%;
 }
 
 .top {
@@ -354,6 +345,14 @@ a.list-group-item.list-group-item-action:hover {
         opacity: 0;
         font-size: 11px;
         transition: 0.5s;
+    }
+    .background-gaming {
+        display: block;
+        height: 200px !important;
+        width: 100%;
+        background: url("public/assets/img/background.png");
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 }
 
