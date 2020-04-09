@@ -37,6 +37,10 @@ a {
     font-size: 13px;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .topbar {
     background-color: black;
 }
@@ -133,11 +137,11 @@ i.fa.fa-home {
 }
 
 .top h3 {
-    font-size: 17px;
-    font-weight: 700;
+    font-size: 15px;
     display: block;
     text-align: center;
     color: black;
+    padding-top: 5px;
 }
 
 .bottom .left .price {
@@ -229,8 +233,7 @@ footer {
 }
 
 hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin: 2px 0px;
     border: 0;
     border-top: 1px solid rgba(234, 225, 225, 0.98);
 }
@@ -354,17 +357,12 @@ hr {
 .blog .carousel-indicators li {
     background: #a3a3a3;
     border-radius: 50%;
-    width: 8px;
-    height: 8px;
-}
-
-.blog .carousel-indicators .active {
-    background: #707070;
+    width: 0;
+    height: 0;
 }
 
 .blog {
     width: 100%;
-    padding: 20px 0px;
     background-color: #0c0c0d;
 }
 
@@ -373,6 +371,7 @@ hr {
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 40px 30px;
 }
 
 #blogCarousel {

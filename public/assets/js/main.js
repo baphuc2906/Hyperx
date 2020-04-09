@@ -62,7 +62,6 @@ $(document).ready(function() {
     //     });
     // }
     $('#blogCarousel').carousel({
-        interval: 5000;
-        autoplay = true
+        interval: 5000
     });
 });
