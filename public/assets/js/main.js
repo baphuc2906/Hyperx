@@ -1,67 +1,125 @@
 $(document).ready(function() {
     // Add smooth scrolling to all links
-    $("a").on('click', function(event) {
-        // Make sure this.hash has a value before overriding default behavior
-        if (this.hash !== "") {
-            // Prevent default anchor click behavior
-            event.preventDefault();
+    // $("a").on('click', function(event) {
+    //     // Make sure this.hash has a value before overriding default behavior
+    //     if (this.hash !== "") {
+    //         // Prevent default anchor click behavior
+    //         event.preventDefault();
 
-            // Store hash
-            var hash = this.hash;
+    //         // Store hash
+    //         var hash = this.hash;
 
-            // Using jQuery's animate() method to add smooth page scroll
-            // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-            $('html, body').animate({
-                scrollTop: 0
-            }, 900, function() {
+    //         // Using jQuery's animate() method to add smooth page scroll
+    //         // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+    //         $('html, body').animate({
+    //             scrollTop: 0
+    //         }, 900, function() {
 
-                // Add hash (#) to URL when done scrolling (default click behavior)
-                window.location.hash = hash;
+    //             // Add hash (#) to URL when done scrolling (default click behavior)
+    //             window.location.hash = hash;
+    //         });
+    //     } // End if
+    // });
+    // $(window).scroll(function() {
+    //     if ($(document).scrollTop() > 300) {
+    //         $(".buttontop").addClass("show");
+    //     } else {
+    //         $(".buttontop").removeClass("show");
+    //     }
+    // });
+    // $('#blogCarousel').carousel({
+    //     interval: 5000
+    // });
+    var itemsMainDiv = ('.MultiCarousel');
+    var itemsDiv = ('.MultiCarousel-inner');
+    var itemWidth = "";
+
+    $('.leftLst, .rightLst').click(function() {
+        var condition = $(this).hasClass("leftLst");
+        if (condition)
+            click(0, this);
+        else
+            click(1, this)
+    });
+    ResCarouselSize();
+    $(window).resize(function() {
+        ResCarouselSize();
+    });
+
+    //this function define the size of the items
+    function ResCarouselSize() {
+        var incno = 0;
+        var dataItems = ("data-items");
+        var itemClass = ('.item');
+        var id = 0;
+        var btnParentSb = '';
+        var itemsSplit = '';
+        var sampwidth = $(itemsMainDiv).width();
+        var bodyWidth = $('body').width();
+        $(itemsDiv).each(function() {
+            id = id + 1;
+            var itemNumbers = $(this).find(itemClass).length;
+            btnParentSb = $(this).parent().attr(dataItems);
+            itemsSplit = btnParentSb.split(',');
+            $(this).parent().attr("id", "MultiCarousel" + id);
+
+
+            if (bodyWidth >= 1200) {
+                incno = itemsSplit[3];
+                itemWidth = sampwidth / incno;
+            } else if (bodyWidth >= 992) {
+                incno = itemsSplit[2];
+                itemWidth = sampwidth / incno;
+            } else if (bodyWidth >= 768) {
+                incno = itemsSplit[1];
+                itemWidth = sampwidth / incno;
+            } else {
+                incno = itemsSplit[0];
+                itemWidth = sampwidth / incno;
+            }
+            $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
+            $(this).find(itemClass).each(function() {
+                $(this).outerWidth(itemWidth);
             });
-        } // End if
-    });
-    $(window).scroll(function() {
-        if ($(document).scrollTop() > 300) {
-            $(".buttontop").addClass("show");
-        } else {
-            $(".buttontop").removeClass("show");
-        }
-    });
-    // new Glider(document.querySelector('.glider'), {
-    //     slidesToScroll: 1,
-    //     slidesToShow: 5.5,
-    //     draggable: true,
-    //     dots: '.dots',
-    //     arrows: {
-    //         prev: '.glider-prev',
-    //         next: '.glider-next'
-    //     }
-    // });
-    // document.querySelector('.glider').addEventListener('glider-slide-visible', function(event) {
-    //     var imgs_to_anticipate = 3;
-    //     var glider = Glider(this);
-    //     for (var i = 0; i <= imgs_to_anticipate; ++i) {
-    //         var index = Math.min(event.detail.slide + i, glider.slides.length - 1),
-    //             glider = glider;
-    //         loadImages.call(glider.slides[index], function() {
-    //             glider.refresh(true);
-    //         })
-    //     }
-    // });
 
-    // function loadImages(callback) {
-    //     [].forEach.call(this.querySelectorAll('img'), function(img) {
-    //         var _img = new Image,
-    //             _src = img.getAttribute('data-src');
-    //         _img.onload = function() {
-    //             img.src = _src;
-    //             img.classList.add('loaded');
-    //             callback && callback(img);
-    //         }
-    //         if (img.src !== _src) _img.src = _src;
-    //     });
-    // }
-    $('#blogCarousel').carousel({
-        interval: 5000
-    });
+            $(".leftLst").addClass("over");
+            $(".rightLst").removeClass("over");
+
+        });
+    }
+    //this function used to move the items
+    function ResCarousel(e, el, s) {
+        var leftBtn = ('.leftLst');
+        var rightBtn = ('.rightLst');
+        var translateXval = '';
+        var divStyle = $(el + ' ' + itemsDiv).css('transform');
+        var values = divStyle.match(/-?[\d\.]+/g);
+        var xds = Math.abs(values[4]);
+        if (e == 0) {
+            translateXval = parseInt(xds) - parseInt(itemWidth * s);
+            $(el + ' ' + rightBtn).removeClass("over");
+
+            if (translateXval <= itemWidth / 2) {
+                translateXval = 0;
+                $(el + ' ' + leftBtn).addClass("over");
+            }
+        } else if (e == 1) {
+            var itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
+            translateXval = parseInt(xds) + parseInt(itemWidth * s);
+            $(el + ' ' + leftBtn).removeClass("over");
+
+            if (translateXval >= itemsCondition - itemWidth / 2) {
+                translateXval = itemsCondition;
+                $(el + ' ' + rightBtn).addClass("over");
+            }
+        }
+        $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
+    }
+
+    //It is used to get some elements from btn
+    function click(ell, ee) {
+        var Parent = "#" + $(ee).parent().attr("id");
+        var slide = $(Parent).attr("data-slide");
+        ResCarousel(ell, Parent, slide);
+    }
 });
